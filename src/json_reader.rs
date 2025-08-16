@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::{self, BufReader};
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use serde_json;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -12,8 +12,8 @@ pub enum TaskStatus {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Task {
-	content: String,
-	status: TaskStatus
+    content: String,
+    status: TaskStatus,
 }
 
 pub fn read_json(path: &str) -> io::Result<Vec<Task>> {
