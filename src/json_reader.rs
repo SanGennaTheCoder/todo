@@ -29,3 +29,13 @@ pub fn read_json(path: &str) -> io::Result<Vec<Task>> {
 
     Ok(tasks)
 }
+
+pub fn write_json(tasks: &Vec<Task>, path: &str) -> std::io::Result<()> {
+    // Open (or create) the file
+    let file = File::create(path)?;
+
+    // Serialize the Vec<Task> to JSON and write it
+    serde_json::to_writer_pretty(file, tasks).expect("Failed to write JSON");
+
+    Ok(())
+}
