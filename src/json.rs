@@ -1,8 +1,7 @@
-use std::fs::File;
-use std::io::{self, BufReader};
-
 use serde::{Deserialize, Serialize};
 use serde_json;
+use std::fs::File;
+use std::io::{self, BufReader};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum TaskStatus {
@@ -12,13 +11,12 @@ pub enum TaskStatus {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Task {
-    content: String,
-    status: TaskStatus,
+    pub content: String,
+    pub status: TaskStatus,
 }
 
 pub fn read_json(path: &str) -> io::Result<Vec<Task>> {
     let file = File::open(path);
-
     let tasks = match file {
         Ok(f) => {
             let reader = BufReader::new(f);
@@ -26,14 +24,11 @@ pub fn read_json(path: &str) -> io::Result<Vec<Task>> {
         }
         Err(_) => Vec::new(),
     };
-
     Ok(tasks)
 }
 
 pub fn write_json(tasks: &Vec<Task>, path: &str) -> std::io::Result<()> {
     let file = File::create(path)?;
-
     serde_json::to_writer_pretty(file, tasks).expect("Failed to write JSON");
-
     Ok(())
 }
